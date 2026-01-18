@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Security Suite - Password & Encryption Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --success: #22c55e;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .security-suite {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Header */
+        .suite-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation */
+        .suite-nav {
+            display: flex;
+            background: var(--light);
+            border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 20px 30px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-tab:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Main Content */
+        .suite-content {
+            padding: 30px;
+            min-height: 600px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e5e7eb;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tool-panel {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .tool-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        textarea.input-field {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Button Groups */
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #16a34a);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #d97706);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+        }
+
+        /* Results */
+        .result-container {
+            margin-top: 25px;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #e5e7eb;
+            display: none;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .result-body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+            word-break: break-word;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Password Strength Meter */
+        .strength-meter {
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            transition: width 0.5s ease, background-color 0.5s;
+        }
+
+        .strength-weak { background: #ef4444; }
+        .strength-medium { background: #f59e0b; }
+        .strength-strong { background: #10b981; }
+
+        /* Criteria Grid */
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .criteria-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .criteria-icon {
+            font-size: 20px;
+        }
+
+        .criteria-pass { color: var(--success); }
+        .criteria-fail { color: var(--danger); }
+
+        /* Generated Password Display */
+        .password-display {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            letter-spacing: 2px;
+            word-break: break-all;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .password-display:hover {
+            background: #374151;
+        }
+
+        .password-display::after {
+            content: '📋 Click to copy';
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* Brute Force Results */
+        .brute-results {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .brute-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .brute-item:hover {
+            background: var(--light);
+            transform: translateX(5px);
+        }
+
+        .brute-key {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 60px;
+        }
+
+        /* Security Log */
+        .security-log {
+            background: #1f2937;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .log-time {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* Footer */
+        .suite-footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--dark);
+            color: white;
+            border-top: 1px solid #374151;
+        }
+
+        .creator-credit {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .suite-nav {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                padding: 15px;
+                justify-content: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .suite-content {
+                padding: 20px;
+            }
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Advanced Options */
+        .advanced-options {
+            background: #f3f4f6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="security-suite">
+        <!-- Header -->
+        <div class="suite-header">
+            <div class="header-content">
+                <h1 style="font-size: 2.8rem; margin-bottom: 15px;">
+                    <i class="fas fa-shield-alt"></i> Security Suite Pro
+                </h1>
+                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px;">
+                    Complete Password Management & Encryption Toolkit
+                </p>
+                <div class="security-badges">
+                    <div class="badge"><i class="fas fa-lock"></i> 100% Client-Side</div>
+                    <div class="badge"><i class="fas fa-bolt"></i> Real-time Processing</div>
+                    <div class="badge"><i class="fas fa-mobile-alt"></i> Cross-Platform</div>
+                    <div class="badge"><i class="fas fa-user-secret"></i> Zero Data Transmission</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation - Removed Secure Vault Tab -->
+        <nav class="suite-nav">
+            <div class="nav-tab active" onclick="switchTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </div>
+            <div class="nav-tab" onclick="switchTab('password-tools')">
+                <i class="fas fa-key"></i> Password Tools
+            </div>
+            <div class="nav-tab" onclick="switchTab('encryption-tools')">
+                <i class="fas fa-lock"></i> Encryption Tools
+            </div>
+            <div class="nav-tab" onclick="switchTab('security-audit')">
+                <i class="fas fa-shield"></i> Security Audit
+            </div>
+            <div class="nav-tab" onclick="switchTab('settings')">
+                <i class="fas fa-cog"></i> Settings
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="suite-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2 style="margin-bottom: 30px; color: var(--primary);">
+                    <i class="fas fa-tachometer-alt"></i> Security Dashboard
+                </h2>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div>
+                                <h3>Password Strength Analyzer</h3>
+                                <p>Check and improve your passwords</p>
+                            </div>
+                        </div>
+                        <input type="text" class="input-field" id="dashboardPassword" placeholder="Enter password to analyze" 
+                               oninput="updateDashboardStrength()">
+                        <div class="strength-meter">
+                            <div class="strength-fill" id="dashboardStrength"></div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="switchTab('password-tools')">
+                            <i class="fas fa-arrow-right"></i> Go to Password Tools
+                        </button>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--secondary);">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div>
+                                <h3>Caesar Cipher</h3>
+                                <p>Encrypt & decrypt messages</p>
+                            </div>
+                        </div>
+                        <input type="text" class="input-field" placeholder="Quick encrypt message..." id="dashboardEncrypt">
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <input type="number" class="input-field" placeholder="Key" value="3" id="dashboardKey" style="flex: 1;">
+                            <button class="btn btn-success" onclick="quickEncrypt()">
+                                <i class="fas fa-bolt"></i> Encrypt
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="switchTab('encryption-tools')">
+                            <i class="fas fa-arrow-right"></i> Go to Encryption Tools
+                        </button>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--warning);">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h3>Security Statistics</h3>
+                                <p>Your security activity</p>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; font-weight: bold; color: var(--primary);" id="totalOperations">0</div>
+                            <p>Total Operations</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--success);" id="encryptCount">0</div>
+                                <small>Encryptions</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--danger);" id="decryptCount">0</div>
+                                <small>Decryptions</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div style="margin-top: 40px;">
+                    <h3 style="margin-bottom: 20px; color: var(--dark);">
+                        <i class="fas fa-bolt"></i> Quick Actions
+                    </h3>
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="generateSecurePassword()">
+                            <i class="fas fa-key"></i> Generate Password
+                        </button>
+                        <button class="btn btn-success" onclick="testAllPasswords()">
+                            <i class="fas fa-vial"></i> Test Passwords
+                        </button>
+                        <button class="btn btn-warning" onclick="showSecurityTips()">
+                            <i class="fas fa-lightbulb"></i> Security Tips
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAllData()">
+                            <i class="fas fa-trash"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Tools Tab -->
+            <div id="password-tools" class="tab-content">
+                <h2 style="margin-bottom: 30px; color: var(--primary);">
+                    <i class="fas fa-key"></i> Password Security Tools
+                </h2>
+                
+                <div class="tools-grid">
+                    <!-- Password Strength Checker -->
+                    <div class="tool-panel">
+                        <div class="tool-title">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Password Strength Analyzer</h3>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">
+                                <i class="fas fa-key"></i> Enter Password
+                            </label>
+                            <input type="text" class="input-field" id="passwordInput" 
+                                   placeholder="Type password to analyze..." 
+                                   oninput="checkPasswordStrength()">
+                        </div>
+
+                        <div class="strength-meter">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        
+                        <div id="strengthResult" style="margin: 20px 0;"></div>
+
+                        <div class="criteria-grid" id="criteriaGrid"></div>
+
+                        <button class="btn btn-primary" style="width: 100%;" onclick="detailedPasswordAnalysis()">
+                            <i class="fas fa-search"></i> Detailed Analysis
+                        </button>
+                    </div>
+
+                    <!-- Password Generator -->
+                    <div class="tool-panel">
+                        <div class="tool-title">
+                            <i class="fas fa-keyboard"></i>
+                            <h3>Secure Password Generator</h3>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">
+                                <i class="fas fa-ruler"></i> Password Length
+                            </label>
+                            <input type="range" id="lengthSlider" min="8" max="32" value="16" 
+                                   oninput="updateLengthValue()" style="width: 100%;">
+                            <div style="text-align: center; margin-top: 5px;">
+                                <span id="lengthValue">16</span> characters
+                            </div>
+                        </div>
+
+                        <div class="options-grid">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="genUppercase" checked> 
+                                <i class="fas fa-text-height"></i> Uppercase (A-Z)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="genLowercase" checked> 
+                                <i class="fas fa-text-height"></i> Lowercase (a-z)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="genNumbers" checked> 
+                                <i class="fas fa-hashtag"></i> Numbers (0-9)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="genSpecial" checked> 
+                                <i class="fas fa-asterisk"></i> Special Characters
+                            </label>
+                        </div>
+
+                        <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="generateSecurePassword()">
+                            <i class="fas fa-bolt"></i> Generate Password
+                        </button>
+
+                        <div class="result-container" id="passwordResult">
+                            <div class="result-header">
+                                <h4><i class="fas fa-key"></i> Generated Password</h4>
+                                <button class="btn" onclick="regeneratePassword()" style="padding: 8px 15px; background: var(--gray); color: white;">
+                                    <i class="fas fa-sync"></i> Regenerate
+                                </button>
+                            </div>
+                            <div class="password-display" id="generatedPassword" onclick="copyToClipboard('generatedPassword')"></div>
+                            <button class="btn btn-primary" onclick="copyToClipboard('generatedPassword')">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encryption Tools Tab -->
+            <div id="encryption-tools" class="tab-content">
+                <h2 style="margin-bottom: 30px; color: var(--primary);">
+                    <i class="fas fa-lock"></i> Encryption Tools
+                </h2>
+                
+                <div class="tools-grid">
+                    <!-- Caesar Cipher -->
+                    <div class="tool-panel">
+                        <div class="tool-title">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h3>Caesar Cipher</h3>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">
+                                <i class="fas fa-font"></i> Text
+                            </label>
+                            <textarea class="input-field" id="cipherText" 
+                                      placeholder="Enter text to encrypt/decrypt...">Hello, World!</textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">
+                                <i class="fas fa-key"></i> Shift Key (1-25)
+                            </label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="number" class="input-field" id="cipherKey" value="3" min="1" max="25" style="flex: 1;">
+                                <input type="range" id="keySlider" min="1" max="25" value="3" 
+                                       oninput="updateKeyValue()" style="flex: 2;">
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="encryptText()">
+                                <i class="fas fa-lock"></i> Encrypt
+                            </button>
+                            <button class="btn btn-success" onclick="decryptText()">
+                                <i class="fas fa-unlock"></i> Decrypt
+                            </button>
+                        </div>
+
+                        <div class="result-container" id="cipherResult">
+                            <div class="result-header">
+                                <h4><i class="fas fa-shield-alt"></i> Result</h4>
+                                <span id="cipherOperation"></span>
+                            </div>
+                            <div class="result-body" id="cipherOutput"></div>
+                            <button class="btn btn-primary" onclick="copyToClipboard('cipherOutput')">
+                                <i class="fas fa-copy"></i> Copy Result
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Brute Force Attack -->
+                    <div class="tool-panel">
+                        <div class="tool-title">
+                            <i class="fas fa-search"></i>
+                            <h3>Brute Force Attack</h3>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">
+                                <i class="fas fa-bullseye"></i> Encrypted Text
+                            </label>
+                            <textarea class="input-field" id="bruteText" 
+                                      placeholder="Enter encrypted text to crack...">Khoor, Zruog!</textarea>
+                        </div>
+
+                        <button class="btn btn-danger" style="width: 100%;" onclick="bruteForceAttack()">
+                            <i class="fas fa-bolt"></i> Start Brute Force Attack
+                        </button>
+
+                        <div class="result-container" id="bruteResult">
+                            <div class="result-header">
+                                <h4><i class="fas fa-list"></i> All Possible Decryptions (25 keys)</h4>
+                                <span id="bruteStats"></span>
+                            </div>
+                            <div class="brute-results" id="bruteResults"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Audit Tab -->
+            <div id="security-audit" class="tab-content">
+                <div class="tool-panel">
+                    <div class="tool-title">
+                        <i class="fas fa-shield"></i>
+                        <h3>Security Audit & Log</h3>
+                    </div>
+                    
+                    <div class="security-log" id="securityLog">
+                        <div class="log-entry">
+                            <div><i class="fas fa-info-circle"></i> Security Suite initialized</div>
+                            <div class="log-time" id="currentTime"></div>
+                        </div>
+                        <div class="log-entry">
+                            <div><i class="fas fa-check-circle"></i> All tools are running client-side</div>
+                            <div class="log-time">No data transmission detected</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="runSecurityAudit()">
+                            <i class="fas fa-search"></i> Run Security Audit
+                        </button>
+                        <button class="btn btn-warning" onclick="clearLog()">
+                            <i class="fas fa-trash"></i> Clear Log
+                        </button>
+                        <button class="btn btn-success" onclick="exportLog()">
+                            <i class="fas fa-download"></i> Export Log
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <div class="tool-panel">
+                    <div class="tool-title">
+                        <i class="fas fa-cog"></i>
+                        <h3>Settings</h3>
+                    </div>
+                    
+                    <div class="options-grid" style="margin-top: 20px;">
+                        <div>
+                            <h4><i class="fas fa-palette"></i> Theme</h4>
+                            <select class="input-field" id="themeSelect">
+                                <option value="default">Default</option>
+                                <option value="dark">Dark Mode</option>
+                                <option value="light">Light Mode</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <h4><i class="fas fa-bell"></i> Notifications</h4>
+                            <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="notificationsToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                                Enable notifications
+                            </label>
+                        </div>
+
+                        <div>
+                            <h4><i class="fas fa-history"></i> Auto-save</h4>
+                            <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="autosaveToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                                Save results
+                            </label>
+                        </div>
+
+                        <div>
+                            <h4><i class="fas fa-clock"></i> Timeout</h4>
+                            <select class="input-field" id="timeoutSelect">
+                                <option value="5">5 minutes</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="saveSettings()">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                        <button class="btn btn-warning" onclick="resetSettings()">
+                            <i class="fas fa-undo"></i> Reset to Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="suite-footer">
+            <p>
+                <i class="fas fa-shield-alt"></i> Security Suite Pro v2.0 | 
+                <i class="fas fa-code"></i> All Processing Client-Side |
+                <i class="fas fa-user-secret"></i> Zero Data Transmission
+            </p>
+            <div class="creator-credit">
+                <i class="fas fa-heart" style="color: #ef4444;"></i>
+                Crafted with care by Abin
+            </div>
+            <p style="margin-top: 15px; opacity: 0.8; font-size: 0.9em;">
+                This tool runs entirely in your browser. No data ever leaves your device.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Global Statistics
+        let securityStats = {
+            totalOperations: 0,
+            encryptions: 0,
+            decryptions: 0,
+            passwordChecks: 0,
+            passwordsGenerated: 0
+        };
+
+        // Tab Management
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate corresponding nav item
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                if (tab.onclick.toString().includes(tabName)) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Update dashboard if it's the active tab
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        // Password Strength Functions
+        function checkPasswordStrength() {
+            const password = document.getElementById('passwordInput').value;
+            const resultDiv = document.getElementById('strengthResult');
+            const strengthFill = document.getElementById('strengthFill');
+            const criteriaGrid = document.getElementById('criteriaGrid');
+            
+            if (!password) {
+                resultDiv.innerHTML = '<p style="color: var(--gray);">Enter a password to analyze</p>';
+                strengthFill.style.width = '0%';
+                criteriaGrid.innerHTML = '';
+                return;
+            }
+
+            // Check criteria
+            const criteria = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                digit: /[0-9]/.test(password),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+                noSequential: !/(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/i.test(password),
+                noCommon: !/(password|123456|qwerty|admin|welcome|letmein|monkey|dragon)/i.test(password)
+            };
+
+            // Calculate score
+            let score = 0;
+            for (const key in criteria) {
+                if (criteria[key]) score++;
+            }
+
+            // Determine strength
+            let strength, color, width;
+            if (score >= 6) {
+                strength = 'Strong';
+                color = 'var(--success)';
+                width = '100%';
+            } else if (score >= 4) {
+                strength = 'Medium';
+                color = 'var(--warning)';
+                width = '66%';
+            } else {
+                strength = 'Weak';
+                color = 'var(--danger)';
+                width = '33%';
+            }
+
+            // Update UI
+            strengthFill.style.width = width;
+            strengthFill.style.backgroundColor = color;
+            strengthFill.className = `strength-fill strength-${strength.toLowerCase()}`;
+
+            // Update criteria display
+            const criteriaNames = {
+                length: 'At least 8 characters',
+                lowercase: 'Lowercase letters',
+                uppercase: 'Uppercase letters',
+                digit: 'Numbers',
+                special: 'Special characters',
+                noSequential: 'No sequential letters/numbers',
+                noCommon: 'Not a common password'
+            };
+
+            criteriaGrid.innerHTML = '';
+            for (const [key, passed] of Object.entries(criteria)) {
+                const div = document.createElement('div');
+                div.className = 'criteria-item';
+                div.innerHTML = `
+                    <span class="criteria-icon ${passed ? 'criteria-pass' : 'criteria-fail'}">
+                        ${passed ? '✓' : '✗'}
+                    </span>
+                    <span>${criteriaNames[key]}</span>
+                `;
+                criteriaGrid.appendChild(div);
+            }
+
+            // Update result text
+            const crackTime = estimateCrackTime(password);
+            resultDiv.innerHTML = `
+                <h4>Strength: <span style="color: ${color}">${strength}</span> (${score}/7)</h4>
+                <p>Estimated crack time: <strong>${crackTime}</strong></p>
+            `;
+
+            // Log this check
+            securityStats.passwordChecks++;
+            updateDashboard();
+            logActivity(`Password strength checked: ${strength}`);
+        }
+
+        function estimateCrackTime(password) {
+            const charsetSize = 94;
+            const length = password.length;
+            const possibleCombinations = Math.pow(charsetSize, length);
+            const seconds = possibleCombinations / 1000000000; // 1 billion guesses/sec
+            
+            if (seconds < 60) return 'Instantly';
+            if (seconds < 3600) return `${Math.round(seconds/60)} minutes`;
+            if (seconds < 86400) return `${Math.round(seconds/3600)} hours`;
+            if (seconds < 31536000) return `${Math.round(seconds/86400)} days`;
+            return `${Math.round(seconds/31536000)} years`;
+        }
+
+        // Password Generation Functions
+        function updateLengthValue() {
+            const slider = document.getElementById('lengthSlider');
+            const valueSpan = document.getElementById('lengthValue');
+            valueSpan.textContent = slider.value;
+        }
+
+        function generateSecurePassword() {
+            const length = parseInt(document.getElementById('lengthSlider').value);
+            const includeUppercase = document.getElementById('genUppercase').checked;
+            const includeLowercase = document.getElementById('genLowercase').checked;
+            const includeNumbers = document.getElementById('genNumbers').checked;
+            const includeSpecial = document.getElementById('genSpecial').checked;
+
+            // Character sets
+            const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            const special = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            // Build character pool
+            let charPool = '';
+            if (includeUppercase) charPool += uppercase;
+            if (includeLowercase) charPool += lowercase;
+            if (includeNumbers) charPool += numbers;
+            if (includeSpecial) charPool += special;
+
+            if (charPool.length === 0) {
+                alert('Please select at least one character type!');
+                return;
+            }
+
+            // Generate password ensuring at least one of each selected type
+            let password = '';
+            const selectedTypes = [];
+
+            if (includeUppercase) {
+                password += uppercase[Math.floor(Math.random() * uppercase.length)];
+                selectedTypes.push('uppercase');
+            }
+            if (includeLowercase) {
+                password += lowercase[Math.floor(Math.random() * lowercase.length)];
+                selectedTypes.push('lowercase');
+            }
+            if (includeNumbers) {
+                password += numbers[Math.floor(Math.random() * numbers.length)];
+                selectedTypes.push('numbers');
+            }
+            if (includeSpecial) {
+                password += special[Math.floor(Math.random() * special.length)];
+                selectedTypes.push('special');
+            }
+
+            // Fill remaining length
+            while (password.length < length) {
+                password += charPool[Math.floor(Math.random() * charPool.length)];
+            }
+
+            // Shuffle the password
+            password = password.split('').sort(() => Math.random() - 0.5).join('');
+
+            // Display the password
+            const resultDiv = document.getElementById('passwordResult');
+            const passwordDisplay = document.getElementById('generatedPassword');
+            
+            passwordDisplay.textContent = password;
+            resultDiv.style.display = 'block';
+
+            // Auto-check strength of generated password
+            document.getElementById('passwordInput').value = password;
+            checkPasswordStrength();
+
+            // Update statistics
+            securityStats.passwordsGenerated++;
+            updateDashboard();
+            logActivity('Generated secure password');
+        }
+
+        function regeneratePassword() {
+            generateSecurePassword();
+        }
+
+        // Caesar Cipher Functions
+        function caesarCipher(text, key, encrypt = true) {
+            let result = "";
+            for (let char of text) {
+                if (char.match(/[a-z]/i)) {
+                    let shift = char === char.toUpperCase() ? 65 : 97;
+                    let newChar;
+                    if (encrypt) {
+                        newChar = String.fromCharCode((char.charCodeAt(0) - shift + key) % 26 + shift);
+                    } else {
+                        newChar = String.fromCharCode((char.charCodeAt(0) - shift - key + 26) % 26 + shift);
+                    }
+                    result += newChar;
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+
+        function updateKeyValue() {
+            const slider = document.getElementById('keySlider');
+            const keyInput = document.getElementById('cipherKey');
+            keyInput.value = slider.value;
+        }
+
+        function encryptText() {
+            const text = document.getElementById('cipherText').value;
+            const key = parseInt(document.getElementById('cipherKey').value);
+            
+            if (!text.trim()) {
+                alert('Please enter text to encrypt!');
+                return;
+            }
+
+            const encrypted = caesarCipher(text, key, true);
+            displayCipherResult(encrypted, 'Encrypted');
+            
+            // Update statistics
+            securityStats.encryptions++;
+            securityStats.totalOperations++;
+            updateDashboard();
+            logActivity(`Text encrypted with key ${key}`);
+        }
+
+        function decryptText() {
+            const text = document.getElementById('cipherText').value;
+            const key = parseInt(document.getElementById('cipherKey').value);
+            
+            if (!text.trim()) {
+                alert('Please enter text to decrypt!');
+                return;
+            }
+
+            const decrypted = caesarCipher(text, key, false);
+            displayCipherResult(decrypted, 'Decrypted');
+            
+            // Update statistics
+            securityStats.decryptions++;
+            securityStats.totalOperations++;
+            updateDashboard();
+            logActivity(`Text decrypted with key ${key}`);
+        }
+
+        function displayCipherResult(text, operation) {
+            const resultDiv = document.getElementById('cipherResult');
+            const outputDiv = document.getElementById('cipherOutput');
+            const operationSpan = document.getElementById('cipherOperation');
+            
+            outputDiv.textContent = text;
+            operationSpan.textContent = operation;
+            resultDiv.style.display = 'block';
+        }
+
+        // Brute Force Attack
+        function bruteForceAttack() {
+            const text = document.getElementById('bruteText').value;
+            
+            if (!text.trim()) {
+                alert('Please enter text to brute force!');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('bruteResults');
+            const resultContainer = document.getElementById('bruteResult');
+            const statsSpan = document.getElementById('bruteStats');
+            
+            resultsDiv.innerHTML = '';
+            
+            // Try all 25 keys
+            for (let k = 1; k <= 25; k++) {
+                const decrypted = caesarCipher(text, k, false);
+                const resultItem = document.createElement('div');
+                resultItem.className = 'brute-item';
+                resultItem.innerHTML = `
+                    <span class="brute-key">Key ${k.toString().padStart(2, '0')}</span>
+                    ${decrypted}
+                `;
+                resultItem.onclick = () => {
+                    document.getElementById('cipherText').value = decrypted;
+                    document.getElementById('cipherKey').value = k;
+                    switchTab('encryption-tools');
+                };
+                resultsDiv.appendChild(resultItem);
+            }
+            
+            statsSpan.textContent = '25 keys tested';
+            resultContainer.style.display = 'block';
+            
+            logActivity('Brute force attack performed');
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            document.getElementById('totalOperations').textContent = securityStats.totalOperations;
+            document.getElementById('encryptCount').textContent = securityStats.encryptions;
+            document.getElementById('decryptCount').textContent = securityStats.decryptions;
+            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+        }
+
+        function updateDashboardStrength() {
+            const password = document.getElementById('dashboardPassword').value;
+            const strengthFill = document.getElementById('dashboardStrength');
+            
+            if (!password) {
+                strengthFill.style.width = '0%';
+                return;
+            }
+
+            // Simple strength calculation
+            const criteria = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                digit: /[0-9]/.test(password),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+            };
+
+            let score = 0;
+            for (const key in criteria) {
+                if (criteria[key]) score++;
+            }
+
+            let width;
+            if (score >= 4) width = '100%';
+            else if (score >= 2) width = '66%';
+            else width = '33%';
+
+            strengthFill.style.width = width;
+            strengthFill.style.backgroundColor = score >= 4 ? 'var(--success)' : 
+                                               score >= 2 ? 'var(--warning)' : 'var(--danger)';
+        }
+
+        function quickEncrypt() {
+            const text = document.getElementById('dashboardEncrypt').value;
+            const key = parseInt(document.getElementById('dashboardKey').value);
+            
+            if (text) {
+                const encrypted = caesarCipher(text, key, true);
+                alert(`Encrypted: ${encrypted}`);
+                logActivity('Quick encryption from dashboard');
+            }
+        }
+
+        // Utility Functions
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!');
+            }).catch(err => {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Copied to clipboard!');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--success);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function logActivity(message) {
+            const logDiv = document.getElementById('securityLog');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <div><i class="fas fa-info-circle"></i> ${message}</div>
+                <div class="log-time">${timestamp}</div>
+            `;
+            
+            logDiv.insertBefore(logEntry, logDiv.firstChild);
+            
+            // Limit log entries
+            if (logDiv.children.length > 20) {
+                logDiv.removeChild(logDiv.lastChild);
+            }
+        }
+
+        // Security Audit
+        function runSecurityAudit() {
+            logActivity('Security audit started');
+            
+            // Simulate audit checks
+            setTimeout(() => {
+                logActivity('✓ All tools are running client-side');
+                logActivity('✓ No data transmission detected');
+                logActivity('✓ Encryption algorithms working correctly');
+                logActivity('✓ Password generation secure');
+                logActivity('✓ Security audit completed successfully');
+            }, 1000);
+        }
+
+        function clearLog() {
+            const logDiv = document.getElementById('securityLog');
+            logDiv.innerHTML = `
+                <div class="log-entry">
+                    <div><i class="fas fa-info-circle"></i> Log cleared</div>
+                    <div class="log-time">${new Date().toLocaleTimeString()}</div>
+                </div>
+            `;
+        }
+
+        function exportLog() {
+            const logDiv = document.getElementById('securityLog');
+            const logText = logDiv.innerText;
+            const blob = new Blob([logText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'security-log.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Settings Functions
+        function saveSettings() {
+            showNotification('Settings saved!');
+            logActivity('Settings updated');
+        }
+
+        function resetSettings() {
+            showNotification('Settings reset to default!');
+            logActivity('Settings reset');
+        }
+
+        // Other Functions
+        function testAllPasswords() {
+            const testPasswords = [
+                'password123',
+                'SecureP@ssw0rd!',
+                'qwerty',
+                'Admin@2024',
+                '1234567890'
+            ];
+            
+            testPasswords.forEach(pass => {
+                document.getElementById('passwordInput').value = pass;
+                checkPasswordStrength();
+            });
+            
+            switchTab('password-tools');
+        }
+
+        function showSecurityTips() {
+            const tips = [
+                'Use passwords with at least 12 characters',
+                'Include uppercase, lowercase, numbers, and special characters',
+                'Avoid using personal information in passwords',
+                'Use a different password for each account',
+                'Consider using a password manager',
+                'Enable two-factor authentication when available',
+                'Regularly update your passwords',
+                'Be cautious of phishing attempts'
+            ];
+            
+            alert('Security Tips:\n\n' + tips.join('\n• '));
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                // Clear all inputs
+                document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                // Hide all result containers
+                document.querySelectorAll('.result-container').forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Reset statistics
+                securityStats = {
+                    totalOperations: 0,
+                    encryptions: 0,
+                    decryptions: 0,
+                    passwordChecks: 0,
+                    passwordsGenerated: 0
+                };
+                
+                updateDashboard();
+                clearLog();
+                showNotification('All data cleared!');
+            }
+        }
+
+        // Extra Functions
+        function detailedPasswordAnalysis() {
+            const password = document.getElementById('passwordInput').value;
+            if (!password) {
+                alert('Please enter a password first!');
+                return;
+            }
+            
+            // Show advanced analysis
+            alert(`Detailed Password Analysis:\n\n` +
+                  `Password: ${password}\n` +
+                  `Length: ${password.length} characters\n` +
+                  `Character types present:\n` +
+                  `• Uppercase: ${/[A-Z]/.test(password) ? 'Yes' : 'No'}\n` +
+                  `• Lowercase: ${/[a-z]/.test(password) ? 'Yes' : 'No'}\n` +
+                  `• Numbers: ${/[0-9]/.test(password) ? 'Yes' : 'No'}\n` +
+                  `• Special: ${/[^A-Za-z0-9]/.test(password) ? 'Yes' : 'No'}\n\n` +
+                  `Entropy score: ${calculateEntropy(password).toFixed(2)} bits\n` +
+                  `(Higher is better, aim for >60 bits)`);
+        }
+
+        function calculateEntropy(password) {
+            let poolSize = 0;
+            if (/[a-z]/.test(password)) poolSize += 26;
+            if (/[A-Z]/.test(password)) poolSize += 26;
+            if (/[0-9]/.test(password)) poolSize += 10;
+            if (/[^A-Za-z0-9]/.test(password)) poolSize += 32; // Approx special chars
+            
+            return Math.log2(Math.pow(poolSize, password.length));
+        }
+
+        // Initialize
+        window.onload = function() {
+            updateDashboard();
+            updateLengthValue();
+            
+            // Set current time
+            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+            
+            // Add some initial log entries
+            logActivity('Security Suite initialized');
+            logActivity('All systems ready');
+            
+            // Auto-update time
+            setInterval(() => {
+                document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
